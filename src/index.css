@@ -1,0 +1,223 @@
+:root {
+  --font-sans: "Overused Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --font-serif: Georgia, Times, serif;
+  --font-mono: Menlo, Courier, monospace;
+}
+
+@font-face {
+font-family: "Overused Grotesk";
+src:
+  url("../fonts/OverusedGrotesk-VF.woff2") format("woff2 supports variations"),
+  url("../fonts/OverusedGrotesk-VF.woff2") format("woff2-variations");
+font-weight: 300 900;
+}
+
+body, html {
+  background: black;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--font-sans);
+  user-select: none;
+}
+
+.button {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
+  animation: appear 0.5s ease-in-out forwards;
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
+  overflow: hidden;
+  font-size: 1em;
+}
+
+.button:hover .icon {
+  animation: bounce 1s infinite;
+}
+
+.button:focus {
+  outline: 2px solid royalblue!important;
+  scale: 1.1;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  25% {
+    transform: translate(-50%, -55%) rotate(-10deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  75% {
+    transform: translate(-50%, -55%) rotate(10deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+.button .icon {
+  display: block;
+  font-size: 5em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  color: white;
+}
+
+.button:hover {
+  outline: 1px solid rgba(255,255,255,0.5);
+}
+
+
+.button:hover, .button:focus {
+  z-index: 1;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  transition: 0.25s opacity;
+}
+
+.button:hover::before, .button:focus::before {
+  content: "";
+  background: linear-gradient(0deg, #000000 0%, rgba(0, 0, 0, 0) 75%);
+}
+
+.button .text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translateZ(30px);
+  opacity: 0;
+}
+
+.button:hover .text, .button:focus .text {
+  opacity: 1;
+  transition: 0.25s opacity;
+  color: white;
+  padding: 25px;
+  text-shadow: 0 0 5px black;
+}
+
+
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-auto-rows: max-content;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-height: max-content;
+  overflow: scroll;
+  background: black;
+  padding: 0px;
+  padding-top: 50px;
+  transition: 0.5s opacity, 0.5s transform, 0.5s filter;
+}
+
+.container.hide {
+  opacity: 0;
+  transform: scale(0.9);
+  filter: blur(5px);
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    pointer-events: none;
+  }
+  100% {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.playing {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  pointer-events: none;
+  color: white;
+  font-size: 2em;
+  text-shadow: 0 0 5px black;
+  transition: 0.25s opacity;
+  z-index: 3222;
+}
+
+.playing.show {
+  animation: show 0.5s forwards;
+}
+
+.playing.hide {
+  animation: hide 0.5s forwards;
+}
+
+@keyframes show {
+  0% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes hide {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+}
+
+.titlebar {
+  -webkit-app-region: drag;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.button.hide {
+  display: none;
+}
